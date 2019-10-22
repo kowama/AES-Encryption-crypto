@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block  title %} Index {% endblock %}
+
+{% block body %}
+    <main class="row">
+        <div class="col-md-10 mx-auto py-3 bg-light" style="min-height: 100%">
+            <form action="/" method="post">
+                <div class="form-row my-1">
+                    <label for="input_text" class="col-form-label">
+                        Enter the Text to Encrypt/Decrypt
+                    </label>
+                    <textarea name="input_text" id="input_text" class="form-control m-2"
+                              rows="6" required>{{ input_text }}</textarea>
+                </div>
+
+                <div class="form-row my-2">
+                    <div class="col-md-9">
+                        <label for="secret_key" class="col-form-label">Secret Key</label>
+                        <input class="form-control" name="secret_key" id="secret_key" value="{{ secrete_key }}"
+                               required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="key_size" class="col-form-label">Key size </label>
+                        <select id="key_size" name="key_size" class="form-control">
+                            <option value="128" label="128" {% if  key_size == 128 %} selected {% endif %}>128
+                            </option>
+                            <option value="192" label="192" {% if key_size == 192 %} selected {% endif %}>192
+                            </option>
+                            <option value="256" label="256" {% if not key_size or  key_size == 256 %}
+                                    selected {% endif %}>256
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row my-1">
+                       <span class="mx-auto p-2 bg-info">
+                            <label for="to_encrypt"></label>
+                        <input type="checkbox" {% if to_encrypt %} checked {% endif %}data-toggle="toggle"
+                               data-on="Encrypt" data-off="Decrypt"
+                               data-onstyle="success" data-offstyle="danger" name="to_encrypt" value="to_encrypt"
+                               id="to_encrypt">
+                        <button type="submit" class="btn btn-info mx-1 text-white">Submit</button>
+                       </span>
+                </div>
+
+            </form>
+            <div class="row">
+                <div class="mx-2 col-12">
+                    <label for="output_text" class="col-form-label">
+                        Output
+                    </label>
+                    <textarea name="output_text" id="input_text" disabled class="form-control"
+                              rows="6">{{ output_text }}</textarea>
+                </div>
+
+            </div>
+            <div class="bg-light">
+                <form class="row my-1">
+                    <div class="row mx-auto">
+                        <div class="form-group col-6">
+                            <button class="btn btn-info mt-4" type="submit" id="submit"> Send to (email)</button>
+                        </div>
+                        <div class="form-group col-6"><label class="my-0" for="email"> </label>
+                            <input class="form-control" type="email" id="email"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

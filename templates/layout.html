@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap4-toggle.min.css') }}">
+    <title>AES | {% block  title %} {% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+</head>
+<body>
+{% include '__navbar.html' %}
+<div id="wrapper" class="container-fluid">
+    <div class="row">
+        <div class="col-md-11 my-1 mx-auto">
+            {% if error_message %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-msg">
+                    <strong>Error Message : </strong> {{ error_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            {% if success_message %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="error-msg">
+                    <strong>Success Message : </strong> {{ success_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% block body %}
+    {% endblock %}
+
+</div>
+o
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/bootstrap4-toggle.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#error-msg").fadeOut(800)
+</script>
+</body>
+</html>
