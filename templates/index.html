@@ -16,13 +16,23 @@
 
                 <div class="form-row my-2">
                     <div class="col-md-9">
-                        <label for="secret_key" class="col-form-label">Secret Key</label>
-                        <input class="form-control" name="secret_key" id="secret_key" value="{{ secrete_key }}"
-                               required>
+                        <label for="secret_key" class="col-form-label">Secret Key
+                            <small class="text-muted text-primary">
+                                <span id="current_key_size">0</span>/<span id="required_key_size">32</span> characters
+                                required
+                            </small>
+                        </label>
+                        <input class="form-control" name="secret_key" id="secret_key"
+                               value="{{ secrete_key }}" required
+                               minlength="32" maxlength="32"
+                               onchange="on_secret_key_change();"
+                               onkeyup="on_secret_key_change()" oninput="on_secret_key_change()"/>
+                        <small id=" emailHelp" class="form-text text-muted">The key must be <span
+                                id="key_size_value">256</span> characters long for this AES.</small>
                     </div>
                     <div class="col-md-3">
                         <label for="key_size" class="col-form-label">Key size </label>
-                        <select id="key_size" name="key_size" class="form-control">
+                        <select id="key_size" name="key_size" class="form-control" onchange="on_key_size_change()">
                             <option value="128" label="128" {% if  key_size == 128 %} selected {% endif %}>128
                             </option>
                             <option value="192" label="192" {% if key_size == 192 %} selected {% endif %}>192
@@ -46,7 +56,7 @@
 
             </form>
             <div class="row">
-                <div class="mx-2 col-12">
+                <div class="mx-auto col-12">
                     <label for="output_text" class="col-form-label">
                         Output
                     </label>
@@ -68,6 +78,50 @@
                 </form>
             </div>
         </div>
+
+        <script type="text/javascript">
+            function on_key_size_change() {
+                const key_size = document.getElementById("key_size");
+                document.getElementById('key_size_value').innerHTML = key_size.value;
+                let n_char_key_size = parseInt(key_size.value) / 8;
+                document.getElementById('required_key_size').innerText = n_char_key_size.toString();
+                const secret_key = document.getElementById('secret_key');
+
+                if (secret_key.value.length > n_char_key_size) {
+                    secret_key.value = secret_key.value.substring(0, n_char_key_size);
+                }
+                secret_key.setAttribute('minlength', n_char_key_size.toString());
+                secret_key.setAttribute('maxlength', n_char_key_size.toString());
+                on_secret_key_change();
+            }
+
+            function on_secret_key_change() {
+                let key_size_input = document.getElementById('secret_key');
+                const key_size = document.getElementById("key_size");
+                const required_key_length = parseInt(key_size.value) / 8;
+                const current_key_length = key_size_input.value.length;
+                document.getElementById('current_key_size').innerHTML = current_key_length;
+
+                const secret_key = document.getElementById('secret_key');
+
+                if (current_key_length === required_key_length) {
+                    secret_key.classList.add('is-valid');
+                    secret_key.classList.remove('is-invalid');
+
+                } else if (current_key_length === 0) {
+                    secret_key.classList.remove('is-invalid');
+                    secret_key.classList.remove('is-valid');
+                } else {
+                    secret_key.classList.add('is-invalid');
+                    secret_key.classList.remove('is-valid');
+                }
+
+            }
+
+            on_key_size_change();
+            on_secret_key_change();
+
+        </script>
 
     </main>
 {% endblock %}

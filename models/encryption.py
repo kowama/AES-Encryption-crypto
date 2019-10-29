@@ -28,15 +28,12 @@ def iv():
 
 class AESCipher(object):
     """
-    https://github.com/dlitz/pycrypto
-    """
+      It is assumed that you use Python 3.0+
+      , so plaintext's type must be str type(== unicode).
+      """
 
     @staticmethod
-    def encrypt(message: str, key: str, key_size: int = 255):
-        """
-        It is assumed that you use Python 3.0+
-        , so plaintext's type must be str type(== unicode).
-        """
+    def encrypt(message: str, key: str) -> str:
         message = message.encode()
         raw = pad(message)
         cipher = AES.new(key, AES.MODE_CBC, iv())
@@ -44,24 +41,20 @@ class AESCipher(object):
         return base64.b64encode(enc).decode('utf-8')
 
     @staticmethod
-    def decrypt(enc: str, key: str, key_size: int = 256):
+    def decrypt(enc: str, key: str) -> str:
         enc = base64.b64decode(enc)
         cipher = AES.new(key, AES.MODE_CBC, iv())
         dec = cipher.decrypt(enc)
         return unpad(dec).decode('utf-8')
 
 
-# c =lDRwTGua0oY4kTJ8SSyYIg==
-# k = asdrfgtyuiolpkjg
 if __name__ == '__main__':
-    #   k = '`?.F(fHbN6XK|j!t'
     m = input('give a cipher text : ')
-    k = '1'
-    while len(k) % 16 != 0:
-        k = input('give a key [16] :  ')
+    k = ''
+    while len(k) != 24:
+        k = input('give a key [24] :  ')
+        print(len(k))
 
     # k
-    print(len(k))
-
     c = AESCipher.encrypt(m, k)
     print(c)

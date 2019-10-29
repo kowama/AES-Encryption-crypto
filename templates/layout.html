@@ -39,7 +39,6 @@
     {% endblock %}
 
 </div>
-o
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}" type="text/javascript"></script>
@@ -47,7 +46,8 @@ o
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='js/bootstrap4-toggle.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-    $("#error-msg").fadeOut(800)
+    $(".alert-danger").delay(1000).fadeOut();
+    $(".alert-success").delay(1000).fadeOut();
 </script>
 </body>
 </html>

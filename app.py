@@ -18,7 +18,6 @@ def index():
             # invalid input text or secret key
             message = 'invalid input text'
             return render_template('index.html', to_encrypt=to_encrypt, error_message=message)
-
         if not secrete_key.strip():
             # invalid input text or secret key
             message = 'invalid secret key'
@@ -49,9 +48,9 @@ def index():
         output_text = ''
         try:
             output_text = AESCipher.encrypt(input_text,
-                                            adapted_secrete_key, key_size
+                                            adapted_secrete_key
                                             ) if to_encrypt else AESCipher.decrypt(input_text,
-                                                                                   adapted_secrete_key, key_size)
+                                                                                   adapted_secrete_key)
         except Exception as error:
             print(error)
             return render_template('index.html', input_text=input_text, secrete_key=secrete_key, key_size=key_size,
@@ -78,4 +77,4 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=False)
